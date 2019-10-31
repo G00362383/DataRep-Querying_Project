@@ -9,7 +9,7 @@ class Movies extends React.Component {
     render() {
         // pulls myMovies collection apart
         return this.props.myMovies.map((movie) => {
-            return <MovieItem key={movie.imdbID} movie={movie}></MovieItem> // each getting on individual object
+            return <MovieItem key={movie._id} movie={movie}></MovieItem> // each getting on individual object
         });
     }
 }
