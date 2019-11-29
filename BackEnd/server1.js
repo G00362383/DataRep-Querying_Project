@@ -2,127 +2,160 @@ const express = require('express')
 const app = express()
 const port = 4000 // react uses port 3000, so use a different port
 const bodyParser = require('body-parser'); // bodyParser for POST
-
+const path = require('path');
 const cors = require('cors');
 
-// for connecting to mongoDB
+// for connecting to mongoDB - BMW Car Sales
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb+srv://admin:admin@cluster0-le9xj.mongodb.net/test?retryWrites=true&w=majority';
-mongoose.connect(mongoDB,{useNewUrlParser:true});
-//====================================================
+const mongoDB = 'mongodb+srv://admin:admin@cluster0-le9xj.mongodb.net/bmwcarsales?retryWrites=true&w=majority';
+mongoose.connect(mongoDB, { useNewUrlParser: true });
 
 app.use(cors());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
 // config lines
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// mongo =========================================================================
+//app.use(express.static(path.join(__dirname, '../build')));
+//app.use('/static', express.static(path.join(__dirname, 'build//static')));
+
+// new mongoose Schema
 const Schema = mongoose.Schema;
 
 // blue print of what we're going to store/ docs to look like
-const movieSchema = new Schema({
-    title:String,
-    year:String,
-    poster:String
+const carSchema = new Schema({
+    model: String,
+    engine: String,
+    image: String,
+    mileage: String,
+    registration: String,
+    price: String
 })
 
-// generates a model of movieSchema
-const MovieModel = mongoose.model('movie', movieSchema);
-//================================================================================
+// generates a model of carSchema
+const CarModel = mongoose.model('cars', carSchema);
+const CarSoldModel = mongoose.model('sales', carSchema);
 
-// get request, URL, req(request), res(response) - res to sender "Hello World"
-app.get('/', (req, res) => {
-    res.send('Welcome to Data Representation & Querying');
+// CRUD: POST - GET - PUT - DELETE on cars in the mongodb ========================
+
+// Crud: POST data mongodb
+app.post('/api/cars', (req, res) => {
+
+    // CarModel (model of carSchema)
+    CarModel.create({
+        model: req.body.model,
+        engine: req.body.engine,
+        image: req.body.image,
+        mileage: req.body.mileage,
+        registration: req.body.registration,
+        price: req.body.price
+    })
+        .then(() => {
+            res.json("Post Recieved!");
+        })
+        .catch(() => {
+            res.json("Post Failed!");
+        })
+})
+
+// cRud - GET the contents of cars
+app.get('/api/cars', (req, res) => {
+    CarModel.find((error, data) => {
+        res.json({ cars: data });
+    })
 });
 
-// :name - this part is a parameter
-app.get('/hello/:name', (req, res) => {
-    // prints to the terminal below
-    console.log(req.params.name);
-    // response - hello plus name entered in URL
-    res.send('hello ' + req.params.name);
-});
+// cRud - GET - find car by id in cars mongo database
+app.get('/api/cars/:id', (req, res) => {
+    //console.log(req.params.id);
 
-app.get('/api/movies/:id', (req, res) => {
-
-    console.log(req.params.id);
-
-    MovieModel.findById(req.params.id, (error,data)=>{
+    CarModel.findById(req.params.id, (error, data) => {
         res.json(data);
     })
-});
-
-// api movies
-app.get('/api/movies', (req, res) => {
-
-    MovieModel.find((error,data)=>{
-         res.json({movies:data});
-    })
-
-
-    // const mymovies = [
-    //     {
-    //         "Title": "Avengers: Infinity War",
-    //         "Year": "2018",
-    //         "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
-    //     },
-    //     {
-    //         "Title": "Captain America: Civil War",
-    //         "Year": "2016",
-    //         "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
-    //     }
-    // ];
-
-    // movies is the object that I'm creating
-    // don't need the status or message
-    // res.status(200).json({ 
-    //     movies: mymovies, message: 'Hello from server'
-    // })
-});
-
-const path = require('path');
-// return html page (index.html)
-app.get('/test', (req, res) => {
-    // __dirname gets me the current directory
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
-
-// linked to the index.html page
-// /name linked to action="/name" on index.html page
-app.get('/name', (req,res) =>{
-    // prints to the terminal below
-    console.log(req.query.firstname +" "+ req.query.lastname);
-    res.send('Hello from get ' + req.query.firstname +" "+ req.query.lastname);
-});
-
-// look up express bodyparser
-app.post('/name', (req,res) =>{
-    console.log(req.body.firstname);
-    res.send('Hello from post ' + req.body.firstname +" "+ req.body.lastname);
 })
 
-app.post('/api/movies', (req,res) => {
-    console.log("Post Request Successful");
-    console.log(req.body.title);
-    console.log(req.body.year);
-    console.log(req.body.poster);
-    
-    //mongo ======================================
-    MovieModel.create({
-        title:req.body.title,
-        year:req.body.year,
-        poster:req.body.poster
-    });
-    //============================================
-    res.json("Post Recieved!");
+// crUd - PUT (updates record (overwrites)) 
+app.put('/api/cars/:id', (req, res) => {
+
+    // body will pass up Mileage, Price, Image
+    CarModel.findByIdAndUpdate(req.params.id,
+        req.body,
+        { new: true },
+        (error, data) => {
+            res.json(data);
+        })
+})
+
+// cruD - DELETE data from the mongodb
+app.delete('/api/cars/:id', (req, res) => {
+    CarModel.deleteOne({ _id: req.params.id },
+        (error, data) => {
+            if (error) {
+                res.json(error);
+            }
+            else {
+                res.json(data);
+            }
+        })
+})
+
+// USE TO FIND CAR BY MODEL - pass up a car model
+app.get('/api/cars/search/:model', (req, res) => {
+    console.log(req.params.model);
+
+    CarModel.findOne({ model: req.params.model }, (error, data) => {
+        //console.log({cars:data})
+        res.json({ cars: data });
+    })
+});
+
+// CRUD: POST - GET - PUT - DELETE on sales in the mongodb ========================
+
+// Crud: POST data mongodb
+app.post('/api/sales', (req, res) => {
+
+    // CarSoldModel (model of carSchema)
+    CarSoldModel.create({
+        model: req.body.model,
+        engine: req.body.engine,
+        image: req.body.image,
+        mileage: req.body.mileage,
+        registration: req.body.registration,
+        price: req.body.price
+    })
+        .then(() => {
+            res.json("Post Recieved!");
+        })
+        .catch(() => {
+            res.json("Post Failed!");
+        })
+})
+
+// cRud - GET the contents of sales
+app.get('/api/sales', (req, res) => {
+    CarSoldModel.find((error, data) => {
+        res.json({ sales: data });
+    })
+});
+
+// cruD - DELETE data from the mongodb
+app.delete('/api/sales/:id', (req, res) => {
+    CarSoldModel.deleteOne({ _id: req.params.id },
+        (error, data) => {
+            if (error) {
+                res.json(error);
+            }
+            else {
+                res.json(data);
+            }
+        })
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

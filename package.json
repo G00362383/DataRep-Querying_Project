@@ -7,7 +7,10 @@
     "bootstrap": "^4.3.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "gridfs-stream": "^1.1.1",
     "mongoose": "^5.7.7",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^4.0.0",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.9.0",
@@ -34,5 +37,21 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/G00362383/drq_lab9.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/G00362383/drq_lab9/issues"
+  },
+  "homepage": "https://github.com/G00362383/drq_lab9#readme"
 }
