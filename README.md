@@ -31,22 +31,6 @@ The browser should automatically open the appliaction but if it does not, go to 
 
 ***
 
-## **API Reference**
-
-The mobile application get the data from the OpenWeatherMap website. Below is a link to the site.
-
-  https://openweathermap.org/
-
-
-
-
-
-
-
-
-
-***
-
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
