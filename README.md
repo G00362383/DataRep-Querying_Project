@@ -33,7 +33,8 @@ The terminal will open at the bottom of the screen. When it does, enter the foll
 
 ***
 <br>
-## **Learn More**
+
+## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
@@ -41,7 +42,8 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ***
 <br>
-## **WIKI Pages**
+
+## WIKI Pages
 
 Please click the Link below for further details about the application. 
 
