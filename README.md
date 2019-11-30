@@ -2,6 +2,28 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Installation
 
+Copy and paste the below link into the browser.
+
+  https://github.com/G00362383/DataRep-Querying_Project
+  
+Click the green, Clone or download drop down button and select Download ZIP.
+
+When the ZIP is downloaded, right click the folder and select Extract all. 
+Select the location that you want to store the ZIP contents.
+Click into the folder, then click into the tab showing where your file is stored and tpye in cmd and hit enter.
+
+The next step is to install all the required dependencies. This is <b>very important</b> step because if all the dependencies are not installed then the application will not work.
+
+npm install
+
+If you want to view the application code in Visual Studio then enter the following:
+
+	code .
+
+
+
+
+
 
 
 ### `npm start`
