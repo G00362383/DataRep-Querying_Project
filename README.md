@@ -17,11 +17,12 @@ To install the dependencies, enter the following command:
 
 	npm install
 	
-If you want to view the application code in Visual Studio then enter the following:
+Open the application in your prefered IDE. Navigate to the <b>Backend</b> folder, right click on the <b>server1.js</b> file and select <b>open in terminal</b>.<br>
+The terminal will open at the bottom of the screen. When it does, enter the following command to start the sever:
 
-	code .
+	node server1.js
 	
-To Run the app in the development mode enter the below command.
+To Run the app in the development mode enter the below command in the main directory and not in the server1.js terminal.
 
 	npm start
 	
