@@ -31,6 +31,7 @@ The terminal will open at the bottom of the screen. When it does, enter the foll
 	
 	http://localhost:3000 
 
+<br>
 ***
 <br>
 
@@ -40,6 +41,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+<br>
 ***
 <br>
 
