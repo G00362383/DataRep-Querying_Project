@@ -57,6 +57,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## **WIKI Pages**
 
-Please view Wiki for further details about the mobile application. 
+Please click the Link below for further details about the application. 
 
-* [Home](https://github.com/G00362383/DataRep-Querying_Project/wiki)
+* [Wiki Pages](https://github.com/G00362383/DataRep-Querying_Project/wiki)
